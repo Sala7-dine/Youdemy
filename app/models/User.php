@@ -7,12 +7,19 @@ public function __construct()
     parent::__construct();
 }
 
-public function register($user) {
+public function register($username , $email , $password , $role , $status){
+
+     // Prepare and execute the insertion query
+     $result = $this->conn->prepare("INSERT INTO utilisateur (nom, email , mot_de_passe , role , status) VALUES (:username , :email, :password , :role , :status)");
+     $result->bindParam(":username" , $username);
+     $result->bindParam(":email" , $email);
+     $result->bindParam(":password" , $password);
+     $result->bindParam(":role" , $role);
+     $result->bindParam(":status" , $status);
    
     try {
-        // Prepare and execute the insertion query
-        $result = $this->conn->prepare("INSERT INTO utilisateur (nom, email , mot_de_passe , role , status) VALUES (?, ?, ?, ?)");
-        $result->execute($user);
+       
+        $result->execute();
         return $this->conn->lastInsertId();
         
        
@@ -21,19 +28,19 @@ public function register($user) {
     }
 }
 
-public function login($userData){
+public function login($email , $password){
     
+    $result = $this->conn->prepare("SELECT * FROM utilisateur WHERE email=:email");
+    $result->bindParam(":email" , $email);
+
     try {
-        $result = $this->conn->prepare("SELECT * FROM utilisateurs WHERE email=?");
-        $result->execute([$userData[0]]);
+        $result->execute();
         $user = $result->fetch(PDO::FETCH_ASSOC);
 
-        if($user && password_verify($userData[1], $user["mot_de_passe"])){
-           
-
-           return  $user ;
-        
+        if($user && password_verify($password , $user["mot_de_passe"])){
+           return  $user;
         }
+
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

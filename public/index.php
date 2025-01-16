@@ -6,7 +6,7 @@ require_once '../core/Router.php';
 require_once '../core/Route.php';
 require_once '../app/controllers/HomeController.php';
 require_once '../app/controllers/AuthController.php';
-// require_once '../app/controllers/AdminController.php';
+require_once '../app/controllers/AdminController.php';
 require_once '../app/config/db.php';
 
 
@@ -17,21 +17,25 @@ Route::setRouter($router);
 // Define routes
 
 Route::get('/', [HomeController::class, 'showHome']);
+Route::get('/dashboard', [AdminController::class, 'showDashboard']);
 
 // auth routes 
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'handleRegister']);
 Route::get('/login', [AuthController::class, 'showleLogin']);
 Route::post('/login', [AuthController::class, 'handleLogin']);
+
+
+
 //Route::post('/logout', [AuthController::class, 'logout']);
 
 // admin routers
 
-Route::get('/admin', [AdminController::class, 'index']);
-Route::get('/admin/users', [AdminController::class, 'handleUsers']);
-Route::get('/admin/categories', [AdminController::class, 'categories']);
-Route::get('/admin/testimonials', [AdminController::class, 'testimonials']);
-Route::get('/admin/projects', [AdminController::class, 'projects']);
+// Route::get('/admin', [AdminController::class, 'index']);
+// Route::get('/admin/users', [AdminController::class, 'handleUsers']);
+// Route::get('/admin/categories', [AdminController::class, 'categories']);
+// Route::get('/admin/testimonials', [AdminController::class, 'testimonials']);
+// Route::get('/admin/projects', [AdminController::class, 'projects']);
 
 
 
