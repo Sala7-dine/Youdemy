@@ -27,7 +27,7 @@
 </head>
 <body class="bg-white">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full z-50">
+    <!-- <nav class="bg-white shadow-lg fixed w-full z-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -48,7 +48,10 @@
                 </div>
             </div>
         </div>
-    </nav>
+    </nav> -->
+
+
+    <?php include __DIR__ . "/../layouts/header.php"; ?>
 
     <!-- Bannière Principale -->
     <section class="relative min-h-[80vh] pt-32 pb-20 bg-white overflow-hidden">

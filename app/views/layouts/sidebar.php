@@ -10,8 +10,8 @@
           <div class="py-6 px-6">
             <ul class="space-y-2">
               <li>
-                <button id="dashboardBtn"
-                  class="menu-item text-sky-700 text-sm w-full flex items-center cursor-pointer bg-[#00568881] hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
+                <a href="/dashboard" id="dashboardBtn"
+                  class="menu-item text-balck text-sm w-full flex items-center cursor-pointer hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-4"
                     viewBox="0 0 24 24">
                     <path
@@ -22,10 +22,10 @@
                       data-original="#000000" />
                   </svg>
                   <span>Dashboard</span>
-                </button>
+                </a>
               </li>
               <li>
-                <button id="GameBtn"
+                <a href="/dashboard/categorie" id="GameBtn"
                   class="menu-item text-gray-800 text-sm w-full flex items-center cursor-pointer hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-4"
                     viewBox="0 0 60.123 60.123">
@@ -36,11 +36,11 @@
                     <circle cx="4.029" cy="30.062" r="4.029" data-original="#000000" />
                     <circle cx="4.029" cy="48.661" r="4.029" data-original="#000000" />
                   </svg>
-                  <span>Gestion des Jeux</span>
-              </button>
+                  <span>Gestion des Categorie</span>
+              </a>
               </li>
               <li>
-                <button id="userBtn"
+                <a href="/dashboard/users" id="userBtn"
                   class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-4"
                     viewBox="0 0 64 64">
@@ -52,7 +52,7 @@
                       clip-rule="evenodd" data-original="#000000" />
                   </svg>
                   <span>Gestion des utilisateurs</span>
-                </button>
+                </a>
               </li>
               <li>
                 <a href="javascript:void(0)"
@@ -155,22 +155,6 @@
        
   <script defer>
     document.addEventListener('DOMContentLoaded', () => {
-      // sidebar
-      document.querySelectorAll('#sidebar ul > li > .menu-item').forEach((item) => {
-        item.addEventListener('click', () => {
-          // Remove classes from all menu items
-          document.querySelectorAll('#sidebar ul > li > .menu-item').forEach((otherItem) => {
-            otherItem.classList.remove('bg-[#00568881]', 'text-sky-700');
-            otherItem.classList.add('text-gray-800');
-          });
-
-          // Add classes to the clicked 
-          item.classList.add('bg-[#00568881]', 'text-sky-700');
-          item.classList.remove('text-gray-800');
-        });
-      });
-
-
       
       let sidebarToggleBtn = document.getElementById('toggle-sidebar');
       let sidebarCollapseMenu = document.getElementById('sidebar-collapse-menu');

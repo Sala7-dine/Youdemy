@@ -402,46 +402,46 @@
 
 
   <script>
-    let dashboardBtn = document.getElementById("dashboardBtn");
-    let dashboard = document.getElementById("dashboard");
-    let user = document.getElementById("user");
-    let userBtn = document.getElementById("userBtn");
-    let Game = document.getElementById("Game");
-    let GameBtn = document.getElementById("GameBtn");
+    // let dashboardBtn = document.getElementById("dashboardBtn");
+    // let dashboard = document.getElementById("dashboard");
+    // let user = document.getElementById("user");
+    // let userBtn = document.getElementById("userBtn");
+    // let Game = document.getElementById("Game");
+    // let GameBtn = document.getElementById("GameBtn");
 
 
-    dashboardBtn.addEventListener("click", () => {
+    // dashboardBtn.addEventListener("click", () => {
 
-      dashboard.style.display = "flex";
-      user.style.display = "none";
-      Game.style.display = "none";
+    //   dashboard.style.display = "flex";
+    //   user.style.display = "none";
+    //   Game.style.display = "none";
 
-    });
+    // });
 
 
-    userBtn.addEventListener("click", () => {
+    // userBtn.addEventListener("click", () => {
 
-      user.style.display = "flex";
-      dashboard.style.display = "none";
-      Game.style.display = "none";
+    //   user.style.display = "flex";
+    //   dashboard.style.display = "none";
+    //   Game.style.display = "none";
 
-    });
+    // });
 
-    GameBtn.addEventListener("click", () => {
+    // GameBtn.addEventListener("click", () => {
 
-      Game.style.display = "flex";
-      dashboard.style.display = "none";
-      user.style.display = "none";
+    //   Game.style.display = "flex";
+    //   dashboard.style.display = "none";
+    //   user.style.display = "none";
 
-    });
+    // });
 
-    userBtn.addEventListener("click", () => {
+    // userBtn.addEventListener("click", () => {
 
-      user.style.display = "flex";
-      dashboard.style.display = "none";
-      Game.style.display = "none";
+    //   user.style.display = "flex";
+    //   dashboard.style.display = "none";
+    //   Game.style.display = "none";
 
-    });
+    // });
 
     let artcile = document.querySelector(".artcile");
 

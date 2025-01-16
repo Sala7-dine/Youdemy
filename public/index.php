@@ -18,6 +18,8 @@ Route::setRouter($router);
 
 Route::get('/', [HomeController::class, 'showHome']);
 Route::get('/dashboard', [AdminController::class, 'showDashboard']);
+Route::get('/dashboard/users', [AdminController::class, 'showUsers']);
+Route::get('/dashboard/categorie', [AdminController::class, 'showCategorie']);
 
 // auth routes 
 Route::get('/register', [AuthController::class, 'showRegister']);
@@ -27,6 +29,8 @@ Route::post('/login', [AuthController::class, 'handleLogin']);
 // Ajoutez cette ligne avec vos autres routes
 Route::post('/delete-user', [AdminController::class, 'deleteUser']);
 Route::post('/update-status', [AdminController::class, 'updateUserStatus']);
+Route::post('/add-category', [AdminController::class, 'addCategory']);
+Route::post('/delete-category', [AdminController::class, 'deleteCategory']);
 
 
 //Route::post('/logout', [AuthController::class, 'logout']);
