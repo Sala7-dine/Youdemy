@@ -36,19 +36,26 @@ class AdminController extends BaseController {
     }
 
     public function showCategorie(){
-        // Récupérer toutes les catégories
+        
         $categories = $this->UserModel->getAllCategories();
         
-        // Compter le nombre total de catégories
-        $totalCategories = count($categories);
-        
-        // Passer les données à la vue
         $data = [
-            'categories' => $categories,
-            'totalCategories' => $totalCategories
+            'categories' => $categories
         ];
         
         $this->render("admin/categorie", $data);
+    }
+
+    public function showTags(){
+        $tags = $this->UserModel->getAllTags();
+        $totalTags = count($tags);
+        
+        $data = [
+            'tags' => $tags,
+            'totalTags' => $totalTags
+        ];
+        
+        $this->render("admin/tags", $data);
     }
 
     public function deleteUser() {
@@ -117,6 +124,42 @@ class AdminController extends BaseController {
         }
         
         header('Location: /dashboard/categorie');
+        exit();
+    }
+
+    public function addTag() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom'])) {
+            $name = $_POST['nom'];
+            
+            if ($this->UserModel->addTag($name)) {
+                $_SESSION['success'] = "Tag ajouté avec succès";
+            } else {
+                $_SESSION['error'] = "Erreur lors de l'ajout du tag";
+            }
+            
+            header('Location: /dashboard/tags');
+            exit();
+        }
+        
+        header('Location: /dashboard/tags');
+        exit();
+    }
+
+    public function deleteTag() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tag_id'])) {
+            $tagId = $_POST['tag_id'];
+            
+            if ($this->UserModel->deleteTag($tagId)) {
+                $_SESSION['success'] = "Tag supprimé avec succès";
+            } else {
+                $_SESSION['error'] = "Erreur lors de la suppression du tag";
+            }
+            
+            header('Location: /dashboard/tags');
+            exit();
+        }
+        
+        header('Location: /dashboard/tags');
         exit();
     }
 }

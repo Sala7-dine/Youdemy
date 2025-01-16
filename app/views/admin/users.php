@@ -23,25 +23,11 @@
 
         <section id="user" class="flex flex-col items-center bg-gray-50 min-h-screen p-6">
           <!-- Header -->
-          <div class="w-full max-w-7xl bg-white shadow-lg rounded-lg p-6 space-y-6">
+          <div class="w-full max-w-7xl bg-white shadow-sm rounded-lg p-6 space-y-6">
             <div class="flex justify-between items-center">
               <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-2">
                 Gestion des Utilisateurs
               </h1>
-              <div class="flex gap-4">
-                <button class="flex items-center gap-2 px-5 py-2 bg-gray-200 text-gray-600 text-sm font-medium rounded-lg shadow hover:bg-gray-300 transition transform hover:scale-105">
-                  <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v16a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" />
-                  </svg>
-                  Filtrer par Statut
-                </button>
-                <button class="flex items-center gap-2 px-5 py-2 bg-gray-200 text-gray-600 text-sm font-medium rounded-lg shadow hover:bg-gray-300 transition transform hover:scale-105">
-                  <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6" />
-                  </svg>
-                  Filtrer par Rôle
-                </button>
-              </div>
             </div>
 
             <!-- Table -->
