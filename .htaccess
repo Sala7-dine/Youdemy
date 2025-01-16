@@ -1,4 +1,11 @@
 RewriteEngine On
+
+# Exclure les fichiers dans le dossier public
+RewriteCond %{REQUEST_URI} !^/public/
+
+# Ignorer si fichier ou dossier existe
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rediriger tout vers index.php
 RewriteRule ^(.*)$ index.php [QSA,L]

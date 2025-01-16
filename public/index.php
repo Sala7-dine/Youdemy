@@ -24,7 +24,9 @@ Route::get('/register', [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'handleRegister']);
 Route::get('/login', [AuthController::class, 'showleLogin']);
 Route::post('/login', [AuthController::class, 'handleLogin']);
-
+// Ajoutez cette ligne avec vos autres routes
+Route::post('/delete-user', [AdminController::class, 'deleteUser']);
+Route::post('/update-status', [AdminController::class, 'updateUserStatus']);
 
 
 //Route::post('/logout', [AuthController::class, 'logout']);
@@ -48,6 +50,8 @@ Route::post('/login', [AuthController::class, 'handleLogin']);
 
 // Dispatch the request
 $router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
+
+
 
 
 

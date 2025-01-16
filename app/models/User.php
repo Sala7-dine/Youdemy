@@ -46,58 +46,46 @@ public function login($email , $password){
     }
 }
 
-public function getStatistics() {
-    $statistics = [];
-
-    // Total number of users
-    $query = $this->conn->prepare("SELECT COUNT(*) AS total_users FROM utilisateurs");
-    $query->execute();
-    $statistics['total_users'] = $query->fetch(PDO::FETCH_ASSOC)['total_users'];
-
-    // Total number of published projects
-    $query = $this->conn->prepare("SELECT COUNT(*) AS total_projects FROM projets");
-    $query->execute();
-    $statistics['total_projects'] = $query->fetch(PDO::FETCH_ASSOC)['total_projects'];
-
-    // Total number of freelancers
-    $query = $this->conn->prepare("SELECT COUNT(*) AS total_freelancers FROM utilisateurs WHERE role = '3'");
-    $query->execute();
-    $statistics['total_freelancers'] = $query->fetch(PDO::FETCH_ASSOC)['total_freelancers'];
-
-    // Number of ongoing offers (status = 2)
-    $query = $this->conn->prepare("SELECT COUNT(*) AS ongoing_offers FROM offres WHERE status = 2");
-    $query->execute();
-    $statistics['ongoing_offers'] = $query->fetch(PDO::FETCH_ASSOC)['ongoing_offers'];
-
-    return $statistics;
+public function getAllUsers() {
+    try {
+        $query = "SELECT * FROM utilisateur";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return [];
+    }
 }
 
-public function getAllUsers($filter, $userToSearch =''){
-
-
-      
-        $query = "SELECT * FROM utilisateurs WHERE role != 1"; // by default we show all users except admins
+public function deleteUser($id) {
+    try {
+        $query = "DELETE FROM utilisateur WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         
-        // add filter to query
-        if ($filter == 'clients') {
-            $query .= " AND role = 2";
-        } elseif ($filter == 'freelancers') {
-            $query .= " AND role = 3";
+        if ($stmt->execute()) {
+            return true;
         }
-        
-        // add search condition to query
-        if ($userToSearch) {
-            $query .= " AND nom_utilisateur LIKE ?";
-        }
-        
-        $resul = $this->conn->prepare($query);
-        $resul->execute($userToSearch ? ["%$userToSearch%"] : []);
-        
-        // Fetch and return results
-        $users = $resul->fetchAll(PDO::FETCH_ASSOC);
-        return $users;
-   
+        return false;
+    } catch (PDOException $e) {
+        error_log("Erreur de suppression d'utilisateur: " . $e->getMessage());
+        return false;
+    }
+}
 
+public function updateStatus($userId, $newStatus) {
+    try {
+        $query = "UPDATE utilisateur SET status = :status WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':status', $newStatus, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
+        
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        error_log("Erreur de mise à jour du statut: " . $e->getMessage());
+        return false;
+    }
 }
 
 }

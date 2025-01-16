@@ -2,7 +2,7 @@
         <div id="sidebar-collapse-menu"
           class=" bg-white shadow-lg h-screen fixed top-0 left-0 overflow-auto z-[99] lg:min-w-[250px] lg:w-max max-lg:w-0 max-lg:invisible transition-all duration-500">
           <div class="pt-8 pb-2 px-6 sticky top-0 bg-white min-h-[80px] z-[100]">
-            <a href="index.php" class="outline-none"><img src="../asset/Game.svg"
+            <a href="index.php" class="outline-none"><img src="/images/youdemy.svg"
                 alt="logo" class='w-[170px]' />
             </a>
           </div>
@@ -11,7 +11,7 @@
             <ul class="space-y-2">
               <li>
                 <button id="dashboardBtn"
-                  class="menu-item text-orange-700 text-sm w-full flex items-center cursor-pointer bg-[#ffece1] hover:bg-[#ffece1] rounded-md px-3 py-3 transition-all duration-300">
+                  class="menu-item text-sky-700 text-sm w-full flex items-center cursor-pointer bg-[#00568881] hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-4"
                     viewBox="0 0 24 24">
                     <path
@@ -26,7 +26,7 @@
               </li>
               <li>
                 <button id="GameBtn"
-                  class="menu-item text-gray-800 text-sm w-full flex items-center cursor-pointer hover:bg-[#ffece1] rounded-md px-3 py-3 transition-all duration-300">
+                  class="menu-item text-gray-800 text-sm w-full flex items-center cursor-pointer hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-4"
                     viewBox="0 0 60.123 60.123">
                     <path
@@ -41,7 +41,7 @@
               </li>
               <li>
                 <button id="userBtn"
-                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#ffece1] rounded-md px-3 py-3 transition-all duration-300">
+                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-4"
                     viewBox="0 0 64 64">
                     <path
@@ -56,7 +56,7 @@
               </li>
               <li>
                 <a href="javascript:void(0)"
-                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#ffece1] rounded-md px-3 py-3 transition-all duration-300">
+                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-4"
                     viewBox="0 0 682.667 682.667">
                     <defs>
@@ -79,7 +79,7 @@
               </li>
               <li>
                 <a href="javascript:void(0)"
-                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#ffece1] rounded-md px-3 py-3 transition-all duration-300">
+                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-4"
                     viewBox="0 0 24 24">
                     <path fill-rule="evenodd"
@@ -94,7 +94,7 @@
               </li>
               <li>
                 <a href="javascript:void(0)"
-                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#ffece1] rounded-md px-3 py-3 transition-all duration-300">
+                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-4"
                     viewBox="0 0 507.246 507.246">
                     <path
@@ -107,7 +107,7 @@
               </li>
               <li>
                 <a href="javascript:void(0)"
-                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#ffece1] rounded-md px-3 py-3 transition-all duration-300">
+                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-4"
                     viewBox="0 0 214.27 214.27">
                     <path
@@ -122,7 +122,7 @@
               </li>
               <li>
                 <a href="javascript:void(0)"
-                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#ffece1] rounded-md px-3 py-3 transition-all duration-300">
+                  class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#00568881] rounded-md px-3 py-3 transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-4"
                     viewBox="0 0 64 64">
                     <path
@@ -160,12 +160,12 @@
         item.addEventListener('click', () => {
           // Remove classes from all menu items
           document.querySelectorAll('#sidebar ul > li > .menu-item').forEach((otherItem) => {
-            otherItem.classList.remove('bg-[#ffece1]', 'text-orange-700');
+            otherItem.classList.remove('bg-[#00568881]', 'text-sky-700');
             otherItem.classList.add('text-gray-800');
           });
 
           // Add classes to the clicked 
-          item.classList.add('bg-[#ffece1]', 'text-orange-700');
+          item.classList.add('bg-[#00568881]', 'text-sky-700');
           item.classList.remove('text-gray-800');
         });
       });
