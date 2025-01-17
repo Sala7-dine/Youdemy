@@ -30,13 +30,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
             </div>
-            <button type="button" id="ajoutBtn"
-                class="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
-                Ajouter une catégorie
-            </button>
+            
           </div>
 
           <?php if(isset($_SESSION['success'])): ?>
@@ -95,68 +89,77 @@
               </div>
 
           <!-- Liste des catégories -->
-          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-              <div class="overflow-x-auto">
-                  <table class="w-full text-left">
-                      <thead class="bg-sky-600">
-                          <tr>
-                              <th class="px-6 py-3 text-xs font-medium text-gray-100 uppercase tracking-wider">
-                                  Titre
-                              </th>
-                              <th class="px-6 py-3 text-xs font-medium text-gray-100 uppercase tracking-wider">
-                                  Date de création
-                              </th>
-                              <th class="px-6 py-3 text-xs font-medium text-gray-100 uppercase tracking-wider">
-                                  Actions
-                              </th>
-                          </tr>
-                      </thead>
-                      <tbody class="divide-y divide-gray-200">
-                          <?php if(isset($categories) && !empty($categories)): ?>
-                              <?php foreach($categories as $category): ?>
-                                  <tr class="hover:bg-gray-50">
-                                      <td class="px-6 py-4">
-                                          <div class="text-sm font-medium text-gray-900">
+          <section class="flex flex-col items-center bg-gray-50 min-h-screen p-6">
+              <!-- Header -->
+              <div class="w-full max-w-7xl bg-white shadow-sm rounded-lg p-6 space-y-6">
+                  <div class="flex justify-between items-center">
+                      <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-2">
+                          Gestion des Catégories
+                      </h1>
+                      <button type="button" id="ajoutBtn"
+                            class="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            Ajouter une catégorie
+                        </button>
+                  </div>
+
+                  <!-- Table -->
+                  <div class="font-[sans-serif] overflow-x-auto">
+                      <table class="min-w-full bg-white">
+                          <thead class="whitespace-nowrap">
+                              <tr>
+                                  <th class="p-4 text-left text-sm font-semibold text-black">
+                                      Titre
+                                  </th>
+                                  <th class="p-4 text-left text-sm font-semibold text-black">
+                                      Date de création
+                                  </th>
+                                  <th class="p-4 text-left text-sm font-semibold text-black">
+                                      Actions
+                                  </th>
+                              </tr>
+                          </thead>
+                          <tbody class="whitespace-nowrap">
+                              <?php if(isset($categories) && !empty($categories)): ?>
+                                  <?php foreach($categories as $category): ?>
+                                      <tr class="odd:bg-gray-100">
+                                          <td class="p-4 text-sm text-black">
                                               <?= htmlspecialchars($category['nom']) ?>
-                                          </div>
-                                      </td>
-                                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                          <?= date('d/m/Y', strtotime($category['created_at'])) ?>
-                                      </td>
-                                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                          <div class="flex items-center gap-3">
-                                              <form action="/delete-category" method="POST" class="inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?');">
-                                                  <input type="hidden" name="category_id" value="<?= $category['id'] ?>">
-                                                  <button type="submit" name="delete" class="text-red-600 hover:text-red-900" title="Supprimer">
-                                                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                          <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                                      </svg>
-                                                  </button>
-                                              </form>
-                                          </div>
+                                          </td>
+                                          <td class="p-4 text-sm text-black">
+                                              <?= date('d/m/Y', strtotime($category['created_at'])) ?>
+                                          </td>
+                                          <td class="p-4">
+                                              <div class="flex items-center gap-3">
+                                                  <form action="/delete-category" method="POST" class="inline-block" 
+                                                      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?');">
+                                                      <input type="hidden" name="category_id" value="<?= $category['id'] ?>">
+                                                      <button type="submit" class="px-4 py-2 flex items-center justify-center rounded text-white text-sm tracking-wider font-medium border-none outline-none bg-red-600 hover:bg-red-700 active:bg-red-600">
+                                                          <span class="border-r border-white pr-3">Delete</span>
+                                                          <svg xmlns="http://www.w3.org/2000/svg" width="11px" fill="currentColor" class="ml-3 inline" viewBox="0 0 320.591 320.591">
+                                                              <path d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z" />
+                                                              <path d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z" />
+                                                          </svg>
+                                                      </button>
+                                                  </form>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  <?php endforeach; ?>
+                              <?php else: ?>
+                                  <tr>
+                                      <td colspan="5" class="p-4 text-center text-gray-500">
+                                          Aucune catégorie trouvée
                                       </td>
                                   </tr>
-                              <?php endforeach; ?>
-                          <?php else: ?>
-                              <tr>
-                                  <td colspan="5" class="px-6 py-4 text-center text-gray-500">
-                                      <div class="flex flex-col items-center justify-center">
-                                          <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
-                                          </svg>
-                                          <p class="text-lg">Aucune catégorie trouvée</p>
-                                          <button onclick="document.getElementById('ajoutBtn').click()" 
-                                              class="mt-4 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">
-                                              Créer une catégorie
-                                          </button>
-                                      </div>
-                                  </td>
-                              </tr>
-                          <?php endif; ?>
-                      </tbody>
-                  </table>
+                              <?php endif; ?>
+                          </tbody>
+                      </table>
+                  </div>
               </div>
-          </div>
+          </section>
       </section>
     </div>
   </div>

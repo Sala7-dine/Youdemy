@@ -6,7 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
+<style>
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        .card-gradient {
+            background: linear-gradient(135deg, #082f49 0%,#0ea5e9 100%);
+        }
+
+        .nav-link:hover .icon-wrapper {
+            background-color: #6366f1;
+            color: white;
+        }
+
+        .icon-wrapper {
+            transition: all 0.3s ease;
+        }
+        
+    </style>
 
 <body>
 
@@ -21,68 +45,58 @@
 
         <!--------------------------------------------------- DASHBOARD ---------------------------------------------------------------->
 
-        <section id="dashboard" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+        <section id="dashboard" class="p-6">
 
-          <!-- Card 1 -->
-          <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-              <div class="p-3 bg-gray-1000 rounded-full text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 9.75h.008v.008H9.75v-.008zM14.25 9.75h.008v.008h-.008v-.008zM9.75 14.25h.008v.008H9.75v-.008zM14.25 14.25h.008v.008h-.008v-.008z" />
-                </svg>
-              </div>
-              <div class="ml-4">
-                <h4 class="text-lg font-semibold text-gray-700">Total Users</h4>
-                <p class="text-2xl font-bold text-gray-900">1,245</p>
-              </div>
-            </div>
-          </div>
+         <!-- Stats Grid -->
+         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Total Courses -->
+                    <div class="card-gradient rounded-2xl p-6 text-white">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="p-3 bg-white/20 rounded-xl">
+                                <i class="fas fa-book-open text-xl"></i>
+                            </div>
+                            <span class="text-white/70">+12%</span>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-1">15</h3>
+                        <p class="text-white/70">Cours publiés</p>
+                    </div>
 
-          <!-- Card 2 -->
-          <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-              <div class="p-3 bg-green-500 rounded-full text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a4 4 0 10-8 0v2a4 4 0 01-8 0v2a4 4 0 008 0v6" />
-                </svg>
-              </div>
-              <div class="ml-4">
-                <h4 class="text-lg font-semibold text-gray-700">Revenue</h4>
-                <p class="text-2xl font-bold text-gray-900">$54,000</p>
-              </div>
-            </div>
-          </div>
+                    <!-- Total Students -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="p-3 bg-green-100 rounded-xl text-green-600">
+                                <i class="fas fa-users text-xl"></i>
+                            </div>
+                            <span class="text-green-600">+25%</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-800 mb-1">458</h3>
+                        <p class="text-gray-500">Étudiants inscrits</p>
+                    </div>
 
-          <!-- Card 3 -->
-          <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-              <div class="p-3 bg-yellow-500 rounded-full text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <div class="ml-4">
-                <h4 class="text-lg font-semibold text-gray-700">Growth</h4>
-                <p class="text-2xl font-bold text-gray-900">+15%</p>
-              </div>
-            </div>
-          </div>
+                    <!-- Revenue -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="p-3 bg-blue-100 rounded-xl text-blue-600">
+                                <i class="fas fa-dollar-sign text-xl"></i>
+                            </div>
+                            <span class="text-blue-600">+18%</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-800 mb-1">$2,845</h3>
+                        <p class="text-gray-500">Revenus du mois</p>
+                    </div>
 
-          <!-- Card 4 -->
-          <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-              <div class="p-3 bg-red-500 rounded-full text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.5 0-4 2-4 2s1.5 2 4 2 4-2 4-2-1.5-2-4-2z" />
-                </svg>
-              </div>
-              <div class="ml-4">
-                <h4 class="text-lg font-semibold text-gray-700">Bounce Rate</h4>
-                <p class="text-2xl font-bold text-gray-900">32%</p>
-              </div>
-            </div>
-          </div>
-
+                    <!-- Average Rating -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="p-3 bg-yellow-100 rounded-xl text-yellow-600">
+                                <i class="fas fa-star text-xl"></i>
+                            </div>
+                            <span class="text-yellow-600">+5%</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-800 mb-1">4.8</h3>
+                        <p class="text-gray-500">Note moyenne</p>
+                    </div>
+                </div>
         </section>
 
         <!------------------------------------------------ GESTION DES JEUX ------------------------------------------------------------->
