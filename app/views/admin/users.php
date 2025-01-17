@@ -39,7 +39,7 @@
                             ID
                         </th>
                         <th class="p-4 text-left text-sm font-semibold text-black">
-                            Name
+                            Username
                         </th>
                         <th class="p-4 text-left text-sm font-semibold text-black">
                             Email
@@ -65,7 +65,7 @@
                                 </td>
                                 <td class="p-4 text-sm">
                                     <div class="flex items-center cursor-pointer w-max">
-                                        <img src='https://readymadeui.com/profile_4.webp' class="w-9 h-9 rounded-full shrink-0" />
+                                        <!-- <img src='https://readymadeui.com/profile_4.webp' class="w-9 h-9 rounded-full shrink-0" /> -->
                                         <div class="ml-4">
                                             <p class="text-sm text-black"><?= htmlspecialchars($user['nom']) ?></p>
                                         </div>

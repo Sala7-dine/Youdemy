@@ -9,6 +9,7 @@ class BaseController
         extract($data);
         include __DIR__ . '/../app/views/' . $view . '.php';
     }
+    
     public function renderDashboard($view, $data = [])
     {
         

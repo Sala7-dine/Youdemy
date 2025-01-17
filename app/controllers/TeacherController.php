@@ -17,6 +17,12 @@ class TeacherController extends BaseController {
 
     }
 
+    public function showTeacherCours(){
+
+        $this->render("enseignant/mes_cours");
+
+    }
+
 
 
 }

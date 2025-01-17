@@ -1,13 +1,19 @@
 <?php 
 require_once (__DIR__.'/../models/User.php');
+require_once (__DIR__.'/../models/Categorie.php');
+require_once (__DIR__.'/../models/Tags.php');
 
 
 class AdminController extends BaseController {
  
     private $UserModel;
+    private $CategorieModel;
+    private $TagModel;
 
     public function __construct(){
         $this->UserModel = new User();
+        $this->CategorieModel = new Categorie();
+        $this->TagModel = new Tags();
     }
 
     public function showDashboard() {
@@ -37,7 +43,7 @@ class AdminController extends BaseController {
 
     public function showCategorie(){
         
-        $categories = $this->UserModel->getAllCategories();
+        $categories = $this->CategorieModel->getAllCategories();
         
         $data = [
             'categories' => $categories
@@ -47,12 +53,11 @@ class AdminController extends BaseController {
     }
 
     public function showTags(){
-        $tags = $this->UserModel->getAllTags();
+        $tags = $this->TagModel->getAllTags();
         $totalTags = count($tags);
         
         $data = [
-            'tags' => $tags,
-            'totalTags' => $totalTags
+            'tags' => $tags
         ];
         
         $this->render("admin/tags", $data);
@@ -96,7 +101,7 @@ class AdminController extends BaseController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             $title = $_POST['nom'];
             
-            if ($this->UserModel->addCategory($title)) {
+            if ($this->CategorieModel->addCategory($title)) {
                 header('Location: /dashboard/categorie');
                 exit();
             } else {
@@ -113,7 +118,7 @@ class AdminController extends BaseController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['category_id'])) {
             $categoryId = $_POST['category_id'];
             
-            if ($this->UserModel->deleteCategory($categoryId)) {
+            if ($this->CategorieModel->deleteCategory($categoryId)) {
                 $_SESSION['success'] = "Catégorie supprimée avec succès";
             } else {
                 $_SESSION['error'] = "Erreur lors de la suppression de la catégorie";
@@ -131,7 +136,7 @@ class AdminController extends BaseController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom'])) {
             $name = $_POST['nom'];
             
-            if ($this->UserModel->addTag($name)) {
+            if ($this->TagModel->addTag($name)) {
                 $_SESSION['success'] = "Tag ajouté avec succès";
             } else {
                 $_SESSION['error'] = "Erreur lors de l'ajout du tag";
@@ -149,7 +154,7 @@ class AdminController extends BaseController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tag_id'])) {
             $tagId = $_POST['tag_id'];
             
-            if ($this->UserModel->deleteTag($tagId)) {
+            if ($this->TagModel->deleteTag($tagId)) {
                 $_SESSION['success'] = "Tag supprimé avec succès";
             } else {
                 $_SESSION['error'] = "Erreur lors de la suppression du tag";
