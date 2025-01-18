@@ -116,7 +116,7 @@
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="text-xl font-bold text-gray-800">Liste des Cours</h3>
-                            <a href="/mes-cours" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Voir tout</a>
+                            <a href="/mes-cours" class="text-sky-600 hover:text-sky-800 text-sm font-medium">Voir tout</a>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full">
@@ -162,7 +162,7 @@
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="text-xl font-bold text-gray-800">Derniers Étudiants Inscrits</h3>
-                            <a href="/etudiants" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Voir tout</a>
+                            <a href="/etudiants" class="text-sky-600 hover:text-sky-800 text-sm font-medium">Voir tout</a>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full">
@@ -178,7 +178,7 @@
                                     <tr class="border-b border-gray-100">
                                         <td class="py-3 px-2">
                                             <div class="flex items-center">
-                                                <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-medium text-sm mr-3">
+                                                <div class="w-8 h-8 rounded-full bg-sky-100 flex items-center justify-center text-sky-600 font-medium text-sm mr-3">
                                                     JD
                                                 </div>
                                                 <span class="text-sm text-gray-800">John Doe</span>
@@ -188,7 +188,7 @@
                                         <td class="py-3 px-2 text-sm text-gray-600">23 Mars 2024</td>
                                         <td class="py-3 px-2">
                                             <div class="w-full bg-gray-200 rounded-full h-2">
-                                                <div class="bg-indigo-600 h-2 rounded-full" style="width: 75%"></div>
+                                                <div class="bg-sky-600 h-2 rounded-full" style="width: 75%"></div>
                                             </div>
                                         </td>
                                     </tr>
@@ -205,7 +205,7 @@
                                         <td class="py-3 px-2 text-sm text-gray-600">22 Mars 2024</td>
                                         <td class="py-3 px-2">
                                             <div class="w-full bg-gray-200 rounded-full h-2">
-                                                <div class="bg-indigo-600 h-2 rounded-full" style="width: 45%"></div>
+                                                <div class="bg-sky-600 h-2 rounded-full" style="width: 45%"></div>
                                             </div>
                                         </td>
                                     </tr>
@@ -222,7 +222,7 @@
                                         <td class="py-3 px-2 text-sm text-gray-600">21 Mars 2024</td>
                                         <td class="py-3 px-2">
                                             <div class="w-full bg-gray-200 rounded-full h-2">
-                                                <div class="bg-indigo-600 h-2 rounded-full" style="width: 90%"></div>
+                                                <div class="bg-sky-600 h-2 rounded-full" style="width: 90%"></div>
                                             </div>
                                         </td>
                                     </tr>

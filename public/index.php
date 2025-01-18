@@ -44,6 +44,7 @@ Route::post('/delete-tag', [AdminController::class, 'deleteTag']);
 
 Route::get('/dashboard/teacher' , [TeacherController::class , "showTeacherDashboard"]);
 Route::get('/dashboard/teacher/cours' , [TeacherController::class , "showTeacherCours"]);
+Route::post('/dashboard/teacher/cours/add-cours', [TeacherController::class, 'addCours']);
 
 
 

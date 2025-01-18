@@ -36,7 +36,6 @@ CREATE TABLE Enseignant (
 CREATE TABLE Categorie (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL UNIQUE,
-    description TEXT
 );
 
 -- Table Cours
@@ -45,11 +44,11 @@ CREATE TABLE Cours (
     titre VARCHAR(150) NOT NULL,
     description TEXT,
     contenu TEXT,
-    enseignant_id INT NOT NULL,
+    user_id INT NOT NULL,
     categorie_id INT,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (enseignant_id) REFERENCES Enseignant(id) ON DELETE CASCADE,
-    FOREIGN KEY (categorie_id) REFERENCES Categorie(id) ON DELETE SET NULL
+    FOREIGN KEY (user_id) REFERENCES utilisateur(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (categorie_id) REFERENCES categorie(id) ON DELETE SET NULL
 );
 
 -- Table Tags

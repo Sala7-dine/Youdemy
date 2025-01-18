@@ -135,8 +135,16 @@ class AdminController extends BaseController {
     public function addTag() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom'])) {
             $name = $_POST['nom'];
-            
-            if ($this->TagModel->addTag($name)) {
+            $arrayTag = explode(",",$name);
+            $succes = false;
+
+            foreach($arrayTag as $tag){
+                if($this->TagModel->addTag($tag)){
+                    $succes = true;
+                }
+            }
+
+            if ($succes) {
                 $_SESSION['success'] = "Tag ajouté avec succès";
             } else {
                 $_SESSION['error'] = "Erreur lors de l'ajout du tag";
