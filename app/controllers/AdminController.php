@@ -11,9 +11,11 @@ class AdminController extends BaseController {
     private $TagModel;
 
     public function __construct(){
+
         $this->UserModel = new User();
         $this->CategorieModel = new Categorie();
         $this->TagModel = new Tags();
+        
     }
 
     public function showDashboard() {
@@ -64,6 +66,7 @@ class AdminController extends BaseController {
     }
 
     public function deleteUser() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userId = $_POST['user_id'];
             if ($this->UserModel->deleteUser($userId)) {
@@ -80,6 +83,7 @@ class AdminController extends BaseController {
     }
 
     public function updateUserStatus() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id']) && isset($_POST['status'])) {
             $userId = $_POST['user_id'];
             $newStatus = $_POST['status'];
@@ -98,6 +102,7 @@ class AdminController extends BaseController {
     }
 
     public function addCategory() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             $title = $_POST['nom'];
             
@@ -115,6 +120,7 @@ class AdminController extends BaseController {
     }
 
     public function deleteCategory() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['category_id'])) {
             $categoryId = $_POST['category_id'];
             
@@ -133,6 +139,7 @@ class AdminController extends BaseController {
     }
 
     public function addTag() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom'])) {
             $name = $_POST['nom'];
             $arrayTag = explode(",",$name);
@@ -159,6 +166,7 @@ class AdminController extends BaseController {
     }
 
     public function deleteTag() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tag_id'])) {
             $tagId = $_POST['tag_id'];
             
@@ -174,6 +182,7 @@ class AdminController extends BaseController {
         
         header('Location: /dashboard/tags');
         exit();
+
     }
 }
 

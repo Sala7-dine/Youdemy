@@ -54,10 +54,10 @@
                                     Titre
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Description
+                                    Catégorie
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Catégorie
+                                    Tags
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Date de création
@@ -68,7 +68,10 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <?php foreach($cours as $course): ?>
+                            <?php foreach($cours as $course): 
+                                // Récupérer les tags du cours
+                                $courseTags = $this->CoursModel->getCourseTags($course['id']);
+                            ?>
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <?= $course['id'] ?>
@@ -83,29 +86,41 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-900 max-w-xs truncate">
-                                        <?= htmlspecialchars($course['description']) ?>
-                                    </div>
-                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                         <?= htmlspecialchars($course['categorie_nom']) ?>
                                     </span>
                                 </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex flex-wrap gap-1">
+                                        <?php foreach($courseTags as $tag): ?>
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                                <?= htmlspecialchars($tag['nom']) ?>
+                                            </span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <?= date('d/m/Y', strtotime($course['date_creation'])) ?>
                                 </td>
-                                <td class="flex gap-2 px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <div class="flex justify-end gap-2">
+                                        <!-- Bouton Update -->
+                                        <button onclick="editCourse(<?= $course['id'] ?>)" 
+                                                class="px-4 py-2 flex items-center justify-center rounded text-white text-sm tracking-wider font-medium border-none outline-none bg-green-600 hover:bg-green-700 active:bg-green-600">
+                                            <span>Update</span>
+                                        </button>
 
-                                    <button type="submit" class="px-4 py-2 flex items-center justify-center rounded text-white text-sm tracking-wider font-medium border-none outline-none bg-green-600 hover:bg-green-700 active:bg-green-600">
-                                        <span>Update</span>
-                                    </button>
-
-                                    <button type="submit" class="px-4 py-2 flex items-center justify-center rounded text-white text-sm tracking-wider font-medium border-none outline-none bg-red-600 hover:bg-red-700 active:bg-red-600">
-                                        <span>Delete</span>
-                                    </button>
-
+                                        <!-- Formulaire de suppression -->
+                                        <form action="/dashboard/teacher/cours/delete" method="POST" class="inline" 
+                                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');">
+                                            <input type="hidden" name="cours_id" value="<?= $course['id'] ?>">
+                                            <button type="submit" 
+                                                    class="px-4 py-2 flex items-center justify-center rounded text-white text-sm tracking-wider font-medium border-none outline-none bg-red-600 hover:bg-red-700 active:bg-red-600">
+                                                <span>Delete</span>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -115,141 +130,128 @@
             </div>
         </div>
 
-        <!-- Modal -->
-         
-        <div id="courseModal" class="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif] hidden">
-                <div class="w-full max-w-lg bg-white shadow-lg rounded-lg p-8 relative">
-                  <div class="flex items-center">
-                    <h3 class="text-sky-600 text-3xl font-bold flex-1 text-center w-full">Ajouter Cours</h3>
-                    <div onclick="closeModal()" id="close1">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="w-3 ml-2 cursor-pointer shrink-0 fill-gray-400 hover:fill-red-500" viewBox="0 0 320.591 320.591">
-                        <path d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z" data-original="#000000"></path>
-                        <path d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z" data-original="#000000"></path>
-                      </svg>
-                    </div>
-                  </div>
+         <!-- Modal d'ajout/modification de cours -->
+         <div id="courseModal" class="fixed inset-0 p-4 -m-4 hidden flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                
+                <!-- Modal -->
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <form id="courseForm" action="/dashboard/teacher/cours/add-cours" method="POST" enctype="multipart/form-data">
+                        <!-- En-tête du modal -->
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                                <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                        Ajouter un nouveau cours
+                                    </h3>
+                                    <div class="mt-4 space-y-4">
+                                        <!-- Titre -->
+                                        <div>
+                                            <label for="titre" class="block text-sm font-medium text-gray-700">
+                                                Titre du cours
+                                            </label>
+                                            <input type="text" name="titre" id="titre" required
+                                            class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-sky-600 focus:bg-transparent rounded-lg">
+                                        </div>
 
-                  <form id="add-cours" class="space-y-6" action="/dashboard/teacher/cours/add-cours" method="post">
-                    <input type="hidden" name="id" id="courseId">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Titre</label>
-                        <input type="text" name="titre" id="courseTitre" required 
-                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
+                                        <!-- Description -->
+                                        <div>
+                                            <label for="description" class="block text-sm font-medium text-gray-700">
+                                                Description
+                                            </label>
+                                            <textarea name="description" id="description" rows="2"
+                                            class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-sky-600 focus:bg-transparent rounded-lg"></textarea>
+                                        </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea name="description" id="courseDescription" rows="3" 
-                                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
-                    </div>
+                                        <!-- Catégorie -->
+                                        <div>
+                                            <label for="categorie_id" class="block text-sm font-medium text-gray-700">
+                                                Catégorie
+                                            </label>
+                                            <select name="categorie_id" id="categorie_id" required
+                                                class="mt-1 block w-full py-4 px-3 border-none bg-gray-100 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                                <?php foreach($categories as $categorie): ?>
+                                                    <option value="<?= $categorie['id'] ?>"><?= htmlspecialchars($categorie['nom']) ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Type de contenu</label>
-                        <select name="content_type" id="contentType" onchange="toggleContentFields()" 
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="video">Vidéo</option>
-                            <option value="document">Document</option>
-                        </select>
-                    </div>
+                                        <!-- Type de contenu -->
+                                        <div>
+                                            <label for="content_type" class="block text-sm font-medium text-gray-700">
+                                                Type de contenu
+                                            </label>
+                                            <select name="content_type" id="contentType" onchange="toggleContentFields()"
+                                                class="mt-1 block w-full py-4 px-3 border-none bg-gray-100 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                                <option value="video">Vidéo</option>
+                                                <option value="document">Document</option>
+                                            </select>
+                                        </div>
 
-                    <!-- Champs pour la vidéo -->
-                    <div id="videoFields">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">URL de la vidéo</label>
-                            <input type="url" name="video_url" 
-                                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Durée (minutes)</label>
-                            <input type="number" name="duration" 
-                                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        </div>
-                    </div>
+                                        <!-- Champs pour la vidéo -->
+                                        <div id="videoFields">
+                                            <div class="space-y-4">
+                                                <div>
+                                                    <label for="video_url" class="block text-sm font-medium text-gray-700">
+                                                        URL de la vidéo
+                                                    </label>
+                                                    <input type="url" name="video_url" id="video_url"
+                                                    class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-sky-600 focus:bg-transparent rounded-lg">
+                                                </div>
+                                            </div>
+                                        </div>
 
-                    <!-- Champs pour le document -->
-                    <div id="documentFields" style="display: none;">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Document</label>
-                            <input type="file" name="document" 
-                                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        </div>
-                    </div>
+                                        <!-- Content -->
+                                        <div id="documentFields" style="display: none;">
+                                            <label for="text" class="block text-sm font-medium text-gray-700">
+                                                Content
+                                            </label>
+                                            <textarea name="text" id="text" rows="2"
+                                            class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-sky-600 focus:bg-transparent rounded-lg"></textarea>
+                                        </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Catégorie</label>
-                        <select name="categorie_id" id="courseCategorieId" 
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <?php foreach($categories as $categorie): ?>
-                                <option value="<?= $categorie['id'] ?>"><?= htmlspecialchars($categorie['nom']) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                                        <!-- Ajouter cette section dans le formulaire du modal, juste après la section catégorie -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                                Tags
+                                            </label>
+                                            <div class="grid grid-cols-3 gap-2 max-h-32 overflow-y-auto p-2 border border-gray-300 rounded-md">
+                                                <?php foreach($tags as $tag): ?>
+                                                    <div class="flex items-center">
+                                                        <input type="checkbox" 
+                                                               name="tags[]" 
+                                                               value="<?= $tag['id'] ?>" 
+                                                               id="tag-<?= $tag['id'] ?>"
+                                                               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                                        <label for="tag-<?= $tag['id'] ?>" 
+                                                               class="ml-2 block text-sm text-gray-900 truncate">
+                                                            <?= htmlspecialchars($tag['nom']) ?>
+                                                        </label>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        </div>
 
-                    <div class="mt-6 flex justify-end gap-3">
-                        <button type="button" onclick="closeModal()" 
-                                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">
-                            Annuler
-                        </button>
-                        <button type="submit" 
-                                class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700">
-                            Enregistrer
-                        </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-        <!-- <div id="courseModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-            <div class="min-h-screen px-4 text-center">
-                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                </div>
-                <span class="inline-block h-screen align-middle" aria-hidden="true">&#8203;</span>
-                <div class="inline-block w-full max-w-2xl p-6 my-8 text-left align-middle transition-all transform bg-white shadow-xl rounded-lg">
-                    <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-medium text-gray-900" id="modalTitle">Ajouter un nouveau cours</h3>
-                        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-500">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-
-                    <form id="courseForm" class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Titre du cours</label>
-                            <input type="text" name="title" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Description</label>
-                            <textarea name="description" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500 sm:text-sm"></textarea>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Catégorie</label>
-                                <select name="category" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-                                    <option>Développement Web</option>
-                                    <option>Développement Mobile</option>
-                                    <option>Design</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Prix</label>
-                                <input type="number" name="price" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="mt-6 flex justify-end gap-3">
-                            <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
-                                Annuler
-                            </button>
-                            <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-sky-600 border border-transparent rounded-md shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                        <!-- Boutons d'action -->
+                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:ml-3 sm:w-auto sm:text-sm">
                                 Enregistrer
+                            </button>
+                            <button type="button" onclick="closeModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                Annuler
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
-        </div> -->
+        </div>
+
     </main>
 
     <script>

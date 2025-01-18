@@ -8,23 +8,20 @@ interface CourseContent {
 
 class VideoContent implements CourseContent {
     private $videoUrl;
-    private $duration;
     
-    public function __construct($videoUrl, $duration) {
+    public function __construct($videoUrl) {
         $this->videoUrl = $videoUrl;
-        $this->duration = $duration;
     }
     
     public function save() {
         // Logique pour sauvegarder une vidéo
         return [
             'type' => 'video',
-            'url' => $this->videoUrl,
-            'duration' => $this->duration
+            'url' => $this->videoUrl
         ];
     }
     
-    public function getType() {
+    public function getType(){
         return 'video';
     }
     
@@ -34,20 +31,18 @@ class VideoContent implements CourseContent {
 }
 
 class DocumentContent implements CourseContent {
-    private $documentPath;
-    private $fileType;
+
+    private $text;
     
-    public function __construct($documentPath, $fileType) {
-        $this->documentPath = $documentPath;
-        $this->fileType = $fileType;
+    public function __construct($text) {
+        $this->text = $text;
     }
     
     public function save() {
         // Logique pour sauvegarder un document
         return [
             'type' => 'document',
-            'path' => $this->documentPath,
-            'file_type' => $this->fileType
+            'text' => $this->text
         ];
     }
     
@@ -56,6 +51,6 @@ class DocumentContent implements CourseContent {
     }
     
     public function getContent() {
-        return $this->documentPath;
+        return $this->text;
     }
 }
