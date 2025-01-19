@@ -19,46 +19,101 @@ class TeacherController extends BaseController {
     }
 
 
-    public function showTeacherDashboard(){
+    public function checkSubmtion(){
 
-        $this->render("enseignant/dashboard");
+        if (empty($_SESSION["user_id"])) {
+
+            header("Location: /login");
+            exit;
+        }
 
     }
 
+    public function getRoleUser(){
+
+        $user_id = $_SESSION["user_id"];
+
+        $user = $this->UserModel->getUser($user_id);
+
+        $role = $user["role"];
+
+        return $role;
+        
+    }
+
+    public function showTeacherDashboard(){
+
+        $this->checkSubmtion();
+
+        if(empty($_SESSION["user_id"])){          
+
+            header("Location: /login");
+            
+        }else if($this->getRoleUser() === "Enseignant"){
+
+            $this->render("enseignant/dashboard");
+
+        }else {
+
+            $this->render("layouts/page404");
+
+        }
+
+        
+
+    }
+
+    
+    
+
+
     public function showTeacherCours(){
 
-        $user_id = $_SESSION['user_id'];
+        $this->checkSubmtion();
 
-        $courses = $this->CoursModel->getAllCours($user_id);
-        $categories = $this->CategorieModel->getAllCategories();
-        $tags = $this->TagsModel->getAllTags();
+        if(empty($_SESSION["user_id"])){          
 
-        $data = [
-            'cours' => $courses,
-            'categories' => $categories,
-            'tags' => $tags
-        ];
+            header("Location: /login");
+            
+        }else if($this->getRoleUser() === "Enseignant"){
 
-        $this->render("enseignant/mes_cours", $data);
+            $user_id = $_SESSION['user_id'];
+
+            $courses = $this->CoursModel->getAllCours($user_id);
+            $categories = $this->CategorieModel->getAllCategories();
+            $tags = $this->TagsModel->getAllTags();
+
+            $data = [
+                'cours' => $courses,
+                'categories' => $categories,
+                'tags' => $tags
+            ];
+
+            $this->render("enseignant/mes_cours", $data);
+            
+        }else {
+
+            $this->render("layouts/page404");
+
+        }
+        
 
     }
 
     public function addCours() {
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             $contentType = $_POST['content_type'];
             $content = null;
             
-            // Création du contenu selon le type
             if ($contentType === 'video') {
                 $content = new VideoContent(
-                    $_POST['video_url'],
-                    $_POST['duration']
+                    $_POST['video_url']
                 );
             } else {
                 $content = new DocumentContent(
-                    $_POST['document'],
-                    pathinfo($_FILES['document']['name'], PATHINFO_EXTENSION)
+                    $_POST['text']
                 );
             }
 
@@ -69,48 +124,88 @@ class TeacherController extends BaseController {
                 'categorie_id' => $_POST['categorie_id']
             ];
 
-            // Ajout du cours et récupération de son ID
             $coursId = $this->CoursModel->addCours($courseData, $content);
 
-            // Si des tags ont été sélectionnés, les associer au cours
             if (isset($_POST['tags']) && is_array($_POST['tags'])) {
                 foreach ($_POST['tags'] as $tagId) {
                     $this->CoursModel->addCoursTag($coursId, $tagId);
                 }
             }
 
-            if (is_numeric($coursId)) {
-                header('Location: /dashboard/teacher/cours?success=1');
-            } else {
-                header('Location: /dashboard/teacher/cours?error=' . urlencode($coursId));
-            }
+            header('Location: /dashboard/teacher/cours');
         }
     }
 
-    public function deleteCours() {
+    public function deleteCours(){
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cours_id'])) {
 
             $coursId = $_POST['cours_id'];
+        
+            if ($this->CoursModel->deleteCours($coursId)) {
+                header('Location: /dashboard/teacher/cours');
+                exit;
+            } else {
+                header('Location: /dashboard/teacher/cours?error=delete_failed');
+                exit;
+            }
+           
+        }
+    }
+
+    public function editCours() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cours_id'])) {
+            $coursId = $_POST['cours_id'];
             $user_id = $_SESSION['user_id'];
 
-            // Vérifier que le cours appartient bien à l'enseignant
+         
             $cours = $this->CoursModel->getCoursByIdAndUser($coursId, $user_id);
-            
-            if ($cours) {
-                if ($this->CoursModel->deleteCours($coursId)) {
-                    header('Location: /dashboard/teacher/cours?success=delete');
-                    exit;
-                } else {
-                    header('Location: /dashboard/teacher/cours?error=delete_failed');
-                    exit;
-                }
-            } else {
+            if (!$cours) {
                 header('Location: /dashboard/teacher/cours?error=unauthorized');
                 exit;
             }
+
+            $cours['tags'] = $this->CoursModel->getCourseTags($coursId);
+            $categories = $this->CategorieModel->getAllCategories();
+            $tags = $this->TagsModel->getAllTags();
+
+            $data = [
+                'editCourse' => $cours,
+                'categories' => $categories,
+                'tags' => $tags
+            ];
+
+            $this->render("enseignant/mes_cours", $data);
         }
-        header('Location: /dashboard/teacher/cours?error=invalid_request');
-        exit;
     }
+
+    public function updateCours() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $coursId = $_POST['cours_id'];
+            $user_id = $_SESSION['user_id'];
+
+            $cours = $this->CoursModel->getCoursByIdAndUser($coursId, $user_id);
+            if (!$cours) {
+                header('Location: /dashboard/teacher/cours?error=unauthorized');
+                exit;
+            }
+
+            $courseData = [
+                'id' => $coursId,
+                'titre' => $_POST['titre'],
+                'description' => $_POST['description'],
+                'categorie_id' => $_POST['categorie_id']
+            ];
+
+            if ($this->CoursModel->updateCours($courseData)) {
+    
+                $this->CoursModel->updateCoursTags($coursId, $_POST['tags'] ?? []);
+                header('Location: /dashboard/teacher/cours?success=update');
+            } else {
+                header('Location: /dashboard/teacher/cours?error=update_failed');
+            }
+            exit;
+        }
+    }
+
 }

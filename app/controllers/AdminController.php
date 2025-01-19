@@ -18,51 +18,144 @@ class AdminController extends BaseController {
         
     }
 
+    public function checkSubmtion(){
+
+        if (empty($_SESSION["user_id"])) {
+
+            header("Location: /login");
+            exit;
+        }
+
+    }
+
+    public function getRoleUser(){
+
+        $user_id = $_SESSION["user_id"];
+
+        $user = $this->UserModel->getUser($user_id);
+
+        $role = $user["role"];
+
+        return $role;
+        
+    }
+
+
     public function showDashboard() {
-        // Récupérer tous les utilisateurs
-        $users = $this->UserModel->getAllUsers();
         
-        // Passer les données à la vue
-        $data = [
-            'users' => $users
-        ];
         
-        $this->render('admin/dashboard', $data);
+        $this->checkSubmtion();
+        
+
+        if(empty($_SESSION["user_id"])){          
+
+            header("Location: /login");
+            
+        }else if($this->getRoleUser() === "Administrateur"){
+
+            $users = $this->UserModel->getAllUsers();
+            $data = [
+                'users' => $users
+            ];
+            $this->render('admin/dashboard', $data);
+
+        }else {
+
+            $this->render("layouts/page404");
+
+        }
+
+       
+
+       
+
     }
 
     public function showUsers(){
-         // Récupérer tous les utilisateurs
-         $users = $this->UserModel->getAllUsers();
-        
-         // Passer les données à la vue
-         $data = [
-             'users' => $users
-         ];
 
-        $this->render("admin/users" , $data);
+        $this->checkSubmtion();
+
+
+        if(empty($_SESSION["user_id"])){          
+
+            header("Location: /login");
+            
+        }else if($this->getRoleUser() === "Administrateur"){
+            
+            $users = $this->UserModel->getAllUsers();
+        
+            $data = [
+                'users' => $users
+            ];
+
+            $this->render("admin/users" , $data);
+
+        }else {
+
+            $this->render("layouts/page404");
+
+        }
+            
+        
+
+
 
     }
 
     public function showCategorie(){
-        
-        $categories = $this->CategorieModel->getAllCategories();
-        
-        $data = [
-            'categories' => $categories
-        ];
-        
-        $this->render("admin/categorie", $data);
+
+        $this->checkSubmtion();
+
+
+        if(empty($_SESSION["user_id"])){          
+
+            header("Location: /login");
+            
+        }else if($this->getRoleUser() === "Administrateur"){
+            
+                 
+            $categories = $this->CategorieModel->getAllCategories();
+            
+            $data = [
+                'categories' => $categories
+            ];
+            
+            $this->render("admin/categorie", $data);
+
+        }else {
+
+            $this->render("layouts/page404");
+
+        }
+            
+  
     }
 
     public function showTags(){
-        $tags = $this->TagModel->getAllTags();
-        $totalTags = count($tags);
+
+        $this->checkSubmtion();
+
+        if(empty($_SESSION["user_id"])){          
+
+            header("Location: /login");
+            
+        }else if($this->getRoleUser() === "Administrateur"){
+            
+                 
+            $tags = $this->TagModel->getAllTags();
         
-        $data = [
-            'tags' => $tags
-        ];
-        
-        $this->render("admin/tags", $data);
+            $data = [
+                'tags' => $tags
+            ];
+            
+            $this->render("admin/tags", $data);
+
+        }else {
+
+            $this->render("layouts/page404");
+
+        }
+       
     }
 
     public function deleteUser() {
@@ -70,11 +163,11 @@ class AdminController extends BaseController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userId = $_POST['user_id'];
             if ($this->UserModel->deleteUser($userId)) {
-                // Redirection vers le dashboard après suppression réussie
+                
                 header('Location: /dashboard');
                 exit();
             } else {
-                // En cas d'échec de suppression
+                
                 echo "<script>alert('Erreur lors de la suppression de l\'utilisateur');</script>";
             }
         }

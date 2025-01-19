@@ -24,6 +24,7 @@ Route::get('/register', [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'handleRegister']);
 Route::get('/login', [AuthController::class, 'showleLogin']);
 Route::post('/login', [AuthController::class, 'handleLogin']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
 // Admin Routes 
 
@@ -46,6 +47,8 @@ Route::get('/dashboard/teacher' , [TeacherController::class , "showTeacherDashbo
 Route::get('/dashboard/teacher/cours' , [TeacherController::class , "showTeacherCours"]);
 Route::post('/dashboard/teacher/cours/add-cours', [TeacherController::class, 'addCours']);
 Route::post('/dashboard/teacher/cours/delete', [TeacherController::class, 'deleteCours']);
+Route::post('/dashboard/teacher/cours/edit', [TeacherController::class, 'editCours']);
+Route::post('/dashboard/teacher/cours/update', [TeacherController::class, 'updateCours']);
 
 
 
