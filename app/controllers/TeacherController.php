@@ -59,12 +59,7 @@ class TeacherController extends BaseController {
 
         }
 
-        
-
     }
-
-    
-    
 
 
     public function showTeacherCours(){
@@ -155,24 +150,28 @@ class TeacherController extends BaseController {
 
     public function editCours() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cours_id'])) {
+
             $coursId = $_POST['cours_id'];
             $user_id = $_SESSION['user_id'];
-
          
-            $cours = $this->CoursModel->getCoursByIdAndUser($coursId, $user_id);
-            if (!$cours) {
-                header('Location: /dashboard/teacher/cours?error=unauthorized');
-                exit;
-            }
+            // $cours = $this->CoursModel->getCoursByIdAndUser($coursId, $user_id);
+            // if (!$cours) {
+            //     header('Location: /dashboard/teacher/cours?error=unauthorized');
+            //     exit;
+            // }
 
-            $cours['tags'] = $this->CoursModel->getCourseTags($coursId);
+            $courses = $this->CoursModel->getAllCours($user_id);
+            $cours = $this->CoursModel->getCours($user_id , $coursId);
             $categories = $this->CategorieModel->getAllCategories();
             $tags = $this->TagsModel->getAllTags();
+            $modal = true;
 
             $data = [
+                'cours' => $courses,
                 'editCourse' => $cours,
                 'categories' => $categories,
-                'tags' => $tags
+                'tags' => $tags , 
+                'modal' => $modal
             ];
 
             $this->render("enseignant/mes_cours", $data);

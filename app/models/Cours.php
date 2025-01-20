@@ -63,6 +63,33 @@ class Cours extends db {
 
     }
 
+
+    public function getCours($user_id , $cours_id){
+
+        $query = "SELECT c.* , cat.nom as categorie_nom FROM cours c JOIN categorie cat ON c.categorie_id = cat.id WHERE c.user_id = :id AND c.id = :coursId";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $user_id);
+        $stmt->bindParam(":coursId", $cours_id);
+
+        try{
+
+            $stmt->execute();
+            $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            foreach ($courses as &$course) {
+                $course['tags'] = $this->getCourseTags($course['id']);
+            }
+            
+            return $courses;
+
+        }catch(PDOException $e){
+
+            return $e->getMessage();
+
+        }
+
+    }
+
     public function addCoursTag($coursId, $tagId) {
         try {
             $query = "INSERT INTO courstag (cours_id, tag_id) VALUES (:cours_id, :tag_id)";
